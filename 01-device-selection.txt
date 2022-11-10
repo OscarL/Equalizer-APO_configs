@@ -1,0 +1,2 @@
+# Device:    Altavoces Realtek High Definition Audio {90bcff5e-f08c-40d1-ae8e-f30ebdf70f1f}
+Eval: UPMIXING=false

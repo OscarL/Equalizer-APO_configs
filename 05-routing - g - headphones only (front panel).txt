@@ -1,0 +1,11 @@
+# Use Front jack (Back Panel) as Front channels (also leaves Headphone jack at the front).
+# Mute everything else.
+
+# Alternatively... disabling ALL routing configs would achieve the same effect.
+
+If: outputChannelCount > 4
+    Copy: SL=0.0 SR=0.0 C=0.0 LFE=0.0
+    If: outputChannelCount > 6
+        Copy: RL=0.0 RR=0.0
+    Endif:
+Endif:

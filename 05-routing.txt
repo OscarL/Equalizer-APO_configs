@@ -1,0 +1,7 @@
+# Include: 05-routing - a - reverse front channels.txt
+# Include: 05-routing - b - reverse side channels.txt
+# Include: 05-routing - c - reverse center-lfe channels.txt
+# Include: 05-routing - d - reverse rear channels.txt
+Include: 05-routing - e - swap front-side.txt
+# Include: 05-routing - f - side-as-front-only.txt
+# Include: 05-routing - g - headphones only (front panel).txt

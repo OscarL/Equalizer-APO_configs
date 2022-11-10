@@ -1,0 +1,7 @@
+# Reverse Side channels (swap side Left and Right)
+
+Stage: pre-mix
+Copy: Temp_SL=SL
+Copy: Temp_SR=SR
+Copy: SL=Temp_SR
+Copy: SR=Temp_SL

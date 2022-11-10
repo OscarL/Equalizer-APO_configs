@@ -1,0 +1,7 @@
+#
+# My speakers can't really deal with anything outside this range:
+#
+
+Channel: L R SL SR
+Filter: ON HP Fc 60 Hz
+Filter: ON LP Fc 18000 Hz

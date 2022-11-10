@@ -1,0 +1,7 @@
+# Reverse Read channels (swap rear Left and Right)
+
+Stage: pre-mix
+Copy: Temp_RL=RL
+Copy: Temp_RR=RR
+Copy: RL=Temp_RR
+Copy: RR=Temp_RL

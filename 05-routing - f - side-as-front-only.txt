@@ -1,0 +1,11 @@
+# Use Rear/Side jack (Back Panel) as Front channels. Mute everything else.
+
+Copy: SL=L
+Copy: SR=R
+
+If: outputChannelCount > 4
+    Copy: L=0.0 R=0.0 C=0.0 LFE=0.0
+    If: outputChannelCount > 6
+        Copy: RL=0.0 RR=0.0
+    Endif:
+Endif:

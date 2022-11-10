@@ -1,0 +1,22 @@
+#
+# Basic Stereo Upmix to 5.1 (or 7.1).
+# Just copies L/R signals to Side/Rear, and mixes both for Center.
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  Eval: UPMIXING=true
+  Copy: Center=0.5*L+0.5*R
+  Copy: SL=L
+  Copy: SR=R
+  If: outputChannelCount > 4
+    Copy: C=Center
+    Copy: LFE=Center
+    Channel: LFE
+    Filter: ON LP Fc 600 Hz
+  EndIf:
+  If: outputChannelCount > 6
+    Copy: RL=SL
+    Copy: RR=SR
+  EndIf:
+EndIf:

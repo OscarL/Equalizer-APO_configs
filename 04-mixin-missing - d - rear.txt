@@ -1,0 +1,11 @@
+#
+# If we are missing the Rear speakers, mix that into Left and Right (front and side).
+#
+
+If: inputChannelCount > 6 and outputChannelCount > 4
+  Copy: L=L+0.15*RR
+  Copy: R=R+0.15*RR
+  Copy: SL=SL+0.85*RL
+  Copy: SR=SR+0.85*RR
+EndIf:
+

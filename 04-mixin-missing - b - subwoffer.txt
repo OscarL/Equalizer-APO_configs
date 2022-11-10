@@ -1,0 +1,15 @@
+#
+# If we are missing the LFE subwoffer, mix that signal into the speakers we have:
+#
+
+# Don't add LFE if we don't have a real one as source, or at least a fake one from UPMIXING
+If: (inputChannelCount > 4) or (UPMIXING)
+  Copy: L=L+0.175*LFE
+  Copy: R=R+0.175*LFE
+  Copy: SL=SL+0.25*LFE
+  Copy: SR=SR+0.25*LFE
+  If: outputChannelCount > 6
+    Copy: RL=RL+0.25*LFE
+    Copy: RR=RR+0.25*LFE
+  EndIf:
+EndIf:

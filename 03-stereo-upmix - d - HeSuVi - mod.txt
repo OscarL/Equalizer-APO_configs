@@ -1,0 +1,37 @@
+#
+# HeSuVi's upmix (at least, what I think it does after reading its config files).
+#
+# This version simply removes the L/R volume reduction, and ads a tiny bit more
+# volume to the center channel, and fakes some LFE. Suits my taste a bit better.
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  Eval: UPMIXING=true
+
+  Copy: RL=0.3*L+-0.2*R
+  Copy: RR=0.3*R+-0.2*L
+
+  If: outputChannelCount > 4
+    Copy: C=0.25*L+0.25*R
+
+    # Let us fake some cheap LFE signal here:
+    Copy: LFE=0.5*L+0.5*R
+    Channel: LFE
+    Filter: ON LP Fc 600 Hz
+    Filter: ON LS Fc 300 Hz Gain 1.5 dB
+  EndIf:
+
+  If: outputChannelCount > 6
+    Copy: SL=0.45*L+-0.25*R
+    Copy: SR=0.45*R+-0.25*L
+  EndIf:
+EndIf:
+
+If: inputChannelCount == 6 and outputChannelCount > 6
+  Copy: RL=0.4*5+0.1*6
+  Copy: RR=0.4*6+0.1*5
+
+  Copy: SL=0.15*L+-0.10*R+0.45*5
+  Copy: SR=0.15*R+-0.10*L+0.45*6
+EndIf:

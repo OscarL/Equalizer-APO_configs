@@ -1,0 +1,8 @@
+#
+# Bass Boost
+#
+
+Eval: VALUE=1.5
+
+Channel: L R SL SR C RL RR
+Filter: ON LS Fc 300 Hz Gain `VALUE` db

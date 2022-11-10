@@ -1,0 +1,34 @@
+#
+# Ye Olde Extra Stereo. Now with support for 4.x/5.x/7.x systems :-D
+#
+
+# Choose the "strength" of the effect here (2.5 works well for me).
+Eval: FX_STRENGTH=2.5
+
+Stage: pre-mix
+# This should work even if we upmix down the line.
+If: inputChannelCount == 2
+  Copy: Center_Avg=0.5*L+0.5*R
+  Copy: Left_Diff=L+-1.0*Center_Avg
+  Copy: Right_Diff=R+-1.0*Center_Avg
+  Copy: L=Center_Avg+`FX_STRENGTH`*Left_Diff
+  Copy: R=Center_Avg+`FX_STRENGTH`*Right_Diff
+EndIf:
+
+# 4.0/5.1. We asume Side/Rear channels are present.
+If: (inputChannelCount == 4) or (inputChannelCount == 6):
+  Copy: Side_Center_Avg=0.5*SL+0.5*SR
+  Copy: Side_Left_Diff=SL+-1.0*Side_Center_Avg
+  Copy: Side_Right_Diff=SR+-1.0*Side_Center_Avg
+  Copy: SL=Side_Center_Avg+`FX_STRENGTH`*Side_Left_Diff
+  Copy: SR=Side_Center_Avg+`FX_STRENGTH`*Side_Right_Diff
+EndIf:
+
+# 7.1. We asume Rear channels are present.
+If: inputChannelCount > 6:
+  Copy: Rear_Center_Avg=0.5*RL+0.5*RR
+  Copy: Rear_Left_Diff=RL+-1.0*Rear_Center_Avg
+  Copy: Rear_Right_Diff=RR+-1.0*Rear_Center_Avg
+  Copy: RL=Rear_Center_Avg+`FX_STRENGTH`*Rear_Left_Diff
+  Copy: RR=Rear_Center_Avg+`FX_STRENGTH`*Rear_Right_Diff
+EndIf:

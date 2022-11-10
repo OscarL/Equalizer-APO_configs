@@ -1,0 +1,18 @@
+#
+# "El Cheapo" Voice Removal
+#
+
+Stage: pre-mix
+
+# Choose the "strength" of the effect here. Range 0.0 (no effect) to 1.0 (No stereo info left)
+Eval: FX_STRENGTH=0.75
+
+If: inputChannelCount == 2
+  Eval: m1=`FX_STRENGTH`
+  Eval: m2=1-`FX_STRENGTH`
+
+  Copy: Temp_L=L+-1.*R
+  Copy: Temp_R=R+-1.*L
+  Copy: L=`m1`*Temp_L+`m2`*L
+  Copy: R=`m1`*Temp_R+`m2`*R
+EndIf:

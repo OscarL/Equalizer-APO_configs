@@ -1,0 +1,10 @@
+#
+# Force Mono (for a Standford class video with really annoying stereo!)
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  Copy: MONO=0.5*L+0.5*R
+  Copy: L=MONO
+  Copy: R=MONO
+EndIf:

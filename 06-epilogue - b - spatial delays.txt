@@ -1,0 +1,6 @@
+#
+# "Spatial" delay for (swapped) Rear Channels (Headphones):
+#
+
+Channel: L R
+Delay: 10.00 ms

@@ -1,0 +1,6 @@
+# Include: 03-stereo-upmix - a - Basic.txt
+# Include: 03-stereo-upmix - b - Microsoft's Speaker Fill.txt
+# Include: 03-stereo-upmix - c - HeSuVi.txt
+# Include: 03-stereo-upmix - d - HeSuVi - mod.txt
+Include: 03-stereo-upmix - e - OscarL's Speaker Fill.txt
+# Include: 03-stereo-upmix - e - OscarL's Speaker Fill 2.txt

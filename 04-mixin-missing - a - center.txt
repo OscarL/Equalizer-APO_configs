@@ -1,0 +1,11 @@
+#
+# If we are missing the Center speaker, mix that into Left and Right.
+#
+# Don't add center unless we have a real one as source.
+# Adding a fake center doesn't really helps in that case (only makes the front channels louder).
+#
+
+If: (inputChannelCount > 2)
+  Copy: L=L+0.5*C
+  Copy: R=R+0.5*C
+EndIf:

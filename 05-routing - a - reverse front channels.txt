@@ -1,0 +1,7 @@
+# Reverse Front channels (swap front Left and Right)
+
+Stage: pre-mix
+Copy: Temp_L=L
+Copy: Temp_R=R
+Copy: L=Temp_R
+Copy: R=Temp_L

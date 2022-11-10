@@ -1,0 +1,70 @@
+#
+# Oscar Lesta's take on Microsoft's "Speaker Fill" by Upmixing Stereo to 5.1 (or 7.1):
+#
+# To MY ears, this replicates what *I hear* the Microsoft filter does, but actually sound nicer,
+# and the "code" is in the public domain (or under CC0 if your country does not allows public domain).
+#
+# The idea is to add some fake "spatiality" by replicating the FRONT (L, R) *lateral/stereo only*
+# sounds to the SIDE (SL, SR), and posibly REAR (RL, RR), channels, while keeping the *voices* in the front channels (L, R, C).
+#
+# I also atempt to fake some kind of subwoffer signal.
+#
+# Alter this to suit your speaker setup by altering the gain/delay for Side/Rear channels.
+# Spots for this are marked as "# [* gain]" and "# [* delay]", so CTRL+F (search) for that.
+#
+# Improvements could be made by adding some filters and delays according to frecuency bands, but...
+# I don't have neither speakers or ears good enough for that to make a difference :-D
+#
+# Also, as is, it runs FAST. Even on my old Athlon II X2 it uses less than 2% CPU at 800 MHz.
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  # I use this so in other config files I can test if we're umpmixing or not.
+  Eval: UPMIXING=true
+
+  # The actual "magic":
+  Copy: Center_Avg=0.5*L+0.5*R
+  Copy: SIDE_L=L+-1.*R
+  Copy: SIDE_R=R+-1.*L
+
+  # [* gain] 0.75 works for MY setup. You may want to change this value according to your setup.
+  # Feel free to remove the "+0.05*MID" here and see if it works better for you.
+#  Copy: SL=0.95*SIDE_L+0.05*MID
+#  Copy: SR=0.95*SIDE_R+0.05*MID
+  Copy: SL=SIDE_L
+  Copy: SR=SIDE_R
+
+  # Try to minimize the "underwater" artifacts due to the "diff/phase" changes. This works for MY ears and test samples.
+  # Using only one notch filter around 9 or 9.5 KHz greatly minimize the artifacts (depends on test samples).
+  # Using two *almost* completely remove them (again, on anything I've tested).
+  Channel: SL SR
+  Filter: ON NO Fc 8900 Hz Q 0.3333
+  Filter: ON NO Fc 9500 Hz Q 0.3333
+  Filter: ON LP Fc 12000 Hz
+  # [* delay] Alter this according to the actual position of your speakers:
+#  Channel: SL SR
+#  Delay: 5 ms
+
+  If: outputChannelCount > 4
+    # If we have more than 4 Speakers... put them to some use!
+    Copy: C=Center_Avg
+    # Let us fake some cheap LFE signal here:
+    Copy: LFE=Center_Avg
+    Channel: LFE
+    Filter: ON LP Fc 600 Hz
+    Filter: ON LS Fc 300 Hz Gain 1.5 dB
+  EndIf:
+
+  If: outputChannelCount > 6
+    # [* gain] I don't have a 7.1 system, so... I hope this guess-work actually helps, if not... adapt to your taste:
+    # Feel free to remove the "+0.015*MID" here and see if it works better for you.
+    Copy: RL=0.985*SL+0.015*MID
+    Copy: RR=0.985*SR+0.015*MID
+    Channel: RL RR
+    Filter: ON LP Fc 6000 Hz
+    # [* delay] Alter this according to the actual position of your speakers:
+#    Channel: RL RR
+#    Delay: 10 ms
+  EndIf:
+EndIf:

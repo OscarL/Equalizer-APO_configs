@@ -1,0 +1,27 @@
+#
+# HeSuVi's upmix (at least, what I think it does after reading its config files).
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  Eval: UPMIXING=true
+  Copy: L=0.5*L
+  Copy: R=0.5*R
+  Copy: RL=0.3*L+-0.2*R
+  Copy: RR=-0.2*L+0.3*R
+  If: outputChannelCount > 4
+    Copy: C=0.2*L+0.2*R
+    Copy: SUB=0.0
+  EndIf:
+  If: outputChannelCount > 6
+    Copy: SL=0.45*L+-0.25*R
+    Copy: SR=-0.25*L+0.45*R
+  EndIf:
+EndIf:
+
+If: inputChannelCount == 6 and outputChannelCount > 6
+  Copy: RL=0.4*5+0.1*6
+  Copy: RR=0.1*5+0.4*6
+  Copy: SL=0.15*L+-0.10*R+0.45*5
+  Copy: SR=-0.10*L+0.15*R+0.45*6
+EndIf:

@@ -1,0 +1,7 @@
+# Reverse Center and LFE channels
+
+Stage: pre-mix
+Copy: Temp_C=C
+Copy: Temp_LFE=LFE
+Copy: C=Temp_LFE
+Copy: LFE=Temp_C

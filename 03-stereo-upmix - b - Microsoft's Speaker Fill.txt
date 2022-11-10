@@ -1,0 +1,28 @@
+#
+# Mimic Microsoft's "Speaker Fill" by Upmixing Stereo to 5.1 (or 7.1).
+#
+# The effect is as close as I could get it to be (not knowing the algorithm used by MS).
+#
+
+Stage: pre-mix
+If: inputChannelCount == 2
+  Eval: UPMIXING=true
+  Copy: Center=L+R
+  Copy: LDiff=L+-1.*R
+  Copy: RDiff=R+-1.*L
+  Copy: SL=0.5*LDiff
+  Copy: SR=0.5*RDiff
+  Channel: SL SR
+  Filter: ON HP Fc 80 Hz
+
+  If: outputChannelCount > 4
+    Copy: C=0.5*Center
+    Copy: LFE=0.0
+  EndIf:
+
+  If: outputChannelCount > 6
+    # I don't have a 7.1 system to see what MS does here...
+    Copy: RL=SL
+    Copy: RR=SR
+  EndIf:
+EndIf:

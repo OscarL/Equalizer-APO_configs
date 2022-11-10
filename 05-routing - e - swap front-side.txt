@@ -1,0 +1,12 @@
+# Use Headphone jack (Front Panel) and Line Out (Back Panel) as Rear/Side Channels, and use Rear/Side jack (Back Panel) as Front channels.
+
+Copy: Temp_L=L
+Copy: Temp_R=R
+Copy: Temp_SL=SL
+Copy: Temp_SR=SR
+
+# Swap Front <-> Rear/Side
+Copy: L=Temp_SL
+Copy: R=Temp_SR
+Copy: SL=Temp_L
+Copy: SR=Temp_R
